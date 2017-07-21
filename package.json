@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"webpack -d & node server/server.js",
+    "start": "webpack -d & node server/server.js",
     "build": "webpack",
-    "debug":"webpack -d --watch"
+    "debug": "webpack -d --watch"
   },
   "author": "",
   "license": "ISC",
@@ -19,5 +19,12 @@
     "css-loader": "^0.28.4",
     "style-loader": "^0.18.2",
     "webpack": "^3.1.0"
+  },
+  "dependencies": {
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "classnames": "^2.2.5",
+    "express": "^4.15.3",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
   }
 }

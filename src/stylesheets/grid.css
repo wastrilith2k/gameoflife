@@ -6,10 +6,10 @@
     margin:0px;
 }
 .cell.live {
-    background-color:green;
+    background-color:blue;
 }
 .cell.dead {
-    background-color: red;
+    background-color: gray;
 }
 .row {
     display:block;

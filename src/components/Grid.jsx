@@ -7,7 +7,6 @@ export default (props) => {
 
     let rows = props.cells.map((row, ridx) => {
         let cells = row.map((cell, cidx) => {
-            console.log(`Entered ${ridx}, ${cidx}`);
             return (
                 <span 
                     key={`cell-${ridx}-${cidx}`}
