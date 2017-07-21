@@ -8,25 +8,50 @@ class App extends React.Component {
 
         // Ensure size is a numer and set it
         this.size = !isNaN(props.size) ? props.size : 20;
+        this.initialize();
+    }
+
+    initialize() {
 
         let cells = [],
-            liveNeighbors = [];
+        liveNeighbors = [];
 
         for (let r = 0; r < this.size; r++) {
             cells[r] = [];
             liveNeighbors[r] = [];
             for (let c = 0; c < this.size; c++) {
+                //cells[r][c] = false;
                 cells[r][c] = this.getRandomIntInclusive(0,1) === 1 ? true : false;
                 liveNeighbors[r][c] = 0;
             }
         }
+
+        cells[9][10] = true;
+        cells[10][9] = true;
+        cells[10][10] = true;
+        cells[10][11] = true;
+
+        cells[9][30] = true;
+        cells[10][29] = true;
+        cells[10][30] = true;
+        cells[10][31] = true;
+
+        cells[29][10] = true;
+        cells[30][9] = true;
+        cells[30][10] = true;
+        cells[30][11] = true;
+
+        cells[29][30] = true;
+        cells[30][29] = true;
+        cells[30][30] = true;
+        cells[30][31] = true;
 
         // Update state with the array of cells
         this.state = {
             cells,
             liveNeighbors,
             generation:0
-        }        
+        }
     }
 
     getRandomIntInclusive(min, max) {
@@ -43,6 +68,11 @@ class App extends React.Component {
         clearInterval(this.intervalLoop);
     }
 
+    reset = () => {
+        this.stop();
+        this.initialize();
+    }
+
     updateCells = () => {
         let newCells = [];
         for (let r = 0; r < this.size; r++) {
@@ -54,12 +84,14 @@ class App extends React.Component {
                 // Logic of the current snapshot in time
                 for (let R = r - 1; R <= r + 1; R++) {
                     // Don't check any cells outside the boundary
-                    if (R >= 0 && R < this.size && R !== r) {                        
+                    if (R >= 0 && R < this.size) {                        
                         for (let C = c - 1; C <= c + 1; C++) {
                             // Don't check any cells outside the boundary
-                            if (C >= 0 && C < this.size && C !== c) {
+                            if (C >= 0 && C < this.size) {
                                 // The cell contains a boolean so we can check it directly
-                                if (this.state.cells[R][C]) live++;
+                                if (R !== r || C !== c) {
+                                    if (this.state.cells[R][C]) live++;
+                                }
                             }
                         }
                     }
@@ -76,7 +108,7 @@ class App extends React.Component {
                     cell = true;
                 }
 
-                if (this.state.cells[r][c] !== cell) console.log(`Setting ${r},${c} from ${this.state.cells[r][c]} to ${cell} with a live neighbor count of ${live}`);
+                //if (this.state.cells[r][c] !== cell) console.log(`Setting ${r},${c} from ${this.state.cells[r][c]} to ${cell} with a live neighbor count of ${live}`);
 
                 newCells[r][c] = cell;
             }
@@ -100,6 +132,7 @@ class App extends React.Component {
                 <div>
                     <button onClick={this.start}>Start</button>
                     <button onClick={this.stop}>Stop</button>
+                    <button onClick={this.reset}>Reset</button>
                 </div>
                 <div>
                     Generation: {this.state.generation}
