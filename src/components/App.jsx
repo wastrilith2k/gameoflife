@@ -8,6 +8,14 @@ class App extends React.Component {
 
         // Ensure size is a numer and set it
         this.size = !isNaN(props.size) ? props.size : 20;
+        this.state = {
+            cells:[], 
+            generation:0,
+            liveNeighbors:[]
+        }
+    }
+
+    componentDidMount() {
         this.initialize();
     }
 
@@ -47,11 +55,11 @@ class App extends React.Component {
         cells[30][31] = true;
 
         // Update state with the array of cells
-        this.state = {
+        this.setState({
             cells,
             liveNeighbors,
             generation:0
-        }
+        })
     }
 
     getRandomIntInclusive(min, max) {
@@ -118,10 +126,8 @@ class App extends React.Component {
         this.setState({
             cells: newCells,
             generation: newGen
-        })
-
+        });
     }
-
 
     render() {
         return (
